@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+     <form id="inputForm">
+        <input type="text" id="inputText">
+        <button type="submit">Submit</button>
+     </form>
+
+    <script>
+        document.getElementById('inputForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            
+            const inputText = document.getElementById('inputText').value;
+            
+            try {
+                const response = await fetch('http://localhost:3000/api/inputtext', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ text: inputText })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to store input text');
+                }
+
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while storing input text');
+            }
+        });
+    </script>
+</body>
+</html>
